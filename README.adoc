@@ -1,0 +1,35 @@
+= TODO title
+
+== Project set up
+
+. Installing dependencies locally
+
+$ npm install
+
+. Compiling
+$ npm run-script tsc
+
+== Running
+
+tsc && node ./build/index.js
+
+
+== NOTES
+
+=== Project creation
+
+. Create directory (cannot be named `typescript`)
+
+. Initialize npm.
+This will create `packages.json`.
+ $ npm init
+
+. Add Typescript dependency to the project (updates `packages.json`).
+ $ npm install typescript
+
+. Initialize Typescript.
+This will create `tsconfig.json`.
+ $ ./node_modules/.bin/tsc --init
+
+ . Updated `tsconfig.json` with source and output directories
+
