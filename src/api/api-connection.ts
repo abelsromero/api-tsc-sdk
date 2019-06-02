@@ -1,6 +1,7 @@
 import request from 'request';
 import { Paper, Talk } from '@model/paper';
 import { Traceable } from '@model/traceable';
+import { MobileVote } from '@model/MobileVote';
 
 export class ApiConnection {
 
@@ -21,12 +22,7 @@ export class ApiConnection {
             url: `${this.url}/public/api/paper/state/${id}`
         }
             , (error, response, body) => {
-                var cosa = JSON.parse(body).data.instance as Paper
-                if (cosa.senders[0].fullName.startsWith('Venkat')) {
-                    console.log(`${this.url}/public/api/paper/state/${id}`)
-                    console.log(cosa)
-                }
-                return cb(cosa)
+                return cb(JSON.parse(body).data.instance)
             });
     }
 
@@ -53,6 +49,19 @@ export class ApiConnection {
             , (error, response, body) => {
                 // console.log(`Found: ${body.data}`)
                 cb(body.data.items)
+            });
+    }
+
+    getVotes(cb: (votes: MobileVote[]) => void) {
+        request.get({
+            headers: {
+                "Authorization": `Bearer ${this.token}`,
+            },
+            url: `${this.url}/api/attendees/votes/`
+        }
+            , (error, response, body) => {
+
+                return cb(JSON.parse(body).data.items)
             });
     }
 
