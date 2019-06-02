@@ -18,7 +18,7 @@ export class ApiConnector {
         }
             , (error, response, body) => {
                 if (response.statusCode == 200) {
-                    cb(new ApiConnection(`${this.url}/api`, body.data.token))
+                    cb(new ApiConnection(`${this.url}`, body.data.token))
                 } else {
                     console.log("[ERROR]] " + body.message)
                 }

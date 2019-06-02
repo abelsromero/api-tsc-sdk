@@ -22,6 +22,8 @@ export class Paper extends Traceable {
     votes?: PaperVote[];
     travelCost?: boolean;
     sponsor?: boolean;
+    // only used for public/api/paper/state
+    talkId?: string;
 }
 
 export class PaperVote {
