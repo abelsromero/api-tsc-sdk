@@ -1,7 +1,7 @@
 import request from 'request';
 import { Paper, Talk } from '@model/paper';
 import { Traceable } from '@model/traceable';
-import { MobileVote } from '@model/MobileVote';
+import { MobileVote, VoteSource } from '@model/mobileVote';
 
 export class ApiConnection {
 
@@ -62,6 +62,39 @@ export class ApiConnection {
             , (error, response, body) => {
 
                 return cb(JSON.parse(body).data.items)
+            });
+    }
+
+    updateVoteSource(talk: string, email: string, newSource: string) {
+        request.put({
+            headers: {
+                "Authorization": `Bearer ${this.token}`,
+            },
+            url: `${this.url}/api/attendees/votes`,
+            json: {
+                talkId: talk,
+                userEmail: email,
+                source: newSource
+            }
+        }
+            , (error, response, body) => {
+                console.log(body)
+            });
+    }
+
+    createVote(vote: { index: number; talkId: string; userEmail: string; value: number; source: string; },
+        cb: (id: string) => void) {
+        request.put({
+            headers: {
+                "Authorization": `Bearer ${this.token}`,
+            },
+            url: `${this.url}/api/attendees/votes`,
+            json: vote
+        }
+            , (error, response, body) => {
+                console.log(body)
+                console.log(body.data._id)
+                return cb(body.data._id)
             });
     }
 
