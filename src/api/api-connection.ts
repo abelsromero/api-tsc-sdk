@@ -3,6 +3,8 @@ import { Paper, Talk } from '@model/paper';
 import { Traceable } from '@model/traceable';
 import { MobileVote, VoteSource } from '@model/mobileVote';
 import { Session } from 'inspector';
+import { Badge } from '@model/badge';
+import { Favourited } from '@model/favourited';
 
 export class ApiConnection {
 
@@ -73,7 +75,6 @@ export class ApiConnection {
             url: `${this.url}/api/attendees/votes/`
         }
             , (error, response, body) => {
-
                 return cb(JSON.parse(body).data.items)
             });
     }
@@ -108,6 +109,30 @@ export class ApiConnection {
                 console.log(body)
                 console.log(body.data._id)
                 return cb(body.data._id)
+            });
+    }
+
+    getBadges(cb: (badges: Badge[]) => void) {
+        request.get({
+            headers: {
+                "Authorization": `Bearer ${this.token}`,
+            },
+            url: `${this.url}/api/badges/`
+        }
+            , (error, response, body) => {
+                return cb(JSON.parse(body).data.items)
+            });
+    }
+
+    getFavs(cb: (favs: Favourited[]) => void) {
+        request.get({
+            headers: {
+                "Authorization": `Bearer ${this.token}`,
+            },
+            url: `${this.url}/api/talks/favourites/`
+        }
+            , (error, response, body) => {
+                return cb(JSON.parse(body).data.items)
             });
     }
 
