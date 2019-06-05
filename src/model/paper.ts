@@ -50,6 +50,7 @@ export class Sender {
 }
 
 export class Talk extends Paper {
+    sessionId!: string;
     // copy of averageVote
     totalVote!: number;
     speakers!: Sender[];

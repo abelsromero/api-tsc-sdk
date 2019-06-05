@@ -2,6 +2,7 @@ import request from 'request';
 import { Paper, Talk } from '@model/paper';
 import { Traceable } from '@model/traceable';
 import { MobileVote, VoteSource } from '@model/mobileVote';
+import { Session } from 'inspector';
 
 export class ApiConnection {
 
@@ -49,6 +50,18 @@ export class ApiConnection {
             , (error, response, body) => {
                 // console.log(`Found: ${body.data}`)
                 cb(body.data.items)
+            });
+    }
+
+    getSessions(cb: (sessions: Session[]) => void) {
+        request.get({
+            headers: {
+                "Authorization": `Bearer ${this.token}`,
+            },
+            url: `${this.url}/api/sessions`
+        }
+            , (error, response, body) => {
+                return cb(JSON.parse(body).data.items)
             });
     }
 
